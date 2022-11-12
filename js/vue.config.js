@@ -21,17 +21,17 @@ const appConfig = {
         saveBookConfig(index) {
             service.saveBookConfig(this, index)
         },
-        sabeBooksCurrentState() {
-            service.sabeBooksCurrentState(this)
+        saveCurrentBooksState() {
+            service.saveCurrentBooksState(this)
         },
         enableBookEdition(index) {
             service.enableBookEdition(this, index)
         },
-        enableRemoveButtons() {
-            service.enableRemoveButtons(this)
+        enableButtonsRemove() {
+            service.enableButtonsRemove(this)
         },
-        disableRemoveButtons() {
-            service.disableRemoveButtons(this)
+        disableButtonsRemove() {
+            service.disableButtonsRemove(this)
         },
         setEditModeOn() {
             service.setEditModeOn(this)

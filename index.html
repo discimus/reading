@@ -29,12 +29,12 @@
                     <span>New</span>
                 </button>
                 <template v-if="isEnabledRemoveButtons">
-                    <button @click="enableRemoveButtons">
+                    <button @click="disableButtonsRemove">
                         <span>Disable Remove</span>
                     </button>
                 </template>
                 <template v-else>
-                    <button @click="disableRemoveButtons">
+                    <button @click="enableButtonsRemove">
                         <span>Enable Remove</span>
                     </button>
                 </template>
@@ -55,7 +55,7 @@
                             </template>
                         </div>
                     <div class="flex flex-row align-items-baseline gap-3">
-                        <input @change="sabeBooksCurrentState" size="4" type="number" v-model="book.currentPage" :disabled="book.isEditingBook">
+                        <input @change="saveCurrentBooksState" size="4" type="number" v-model="book.currentPage" :disabled="book.isEditingBook">
                         <div class="w-min-60">
                             <template v-if="book.isEditingBook">
                                 <input size="4" type="number" v-model="book.totalPages">
