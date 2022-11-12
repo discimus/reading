@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <div id="app" class="container">
+        <div class="p-1 flex justify-space-between">
+            <div class="flex flex-row">
+                <span>Made with</span>
+                <span>&nbsp;</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-18 w-18 px-1" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                <span>&nbsp;</span>
+                <span>by <a href="https://github.com/discimus" target=”_blank”>discimus</a></span>
+            </div>
+            <div class="flex flex-row justify-end gap-3">
+                <button @click="createEmptyBook">
+                    <span>New</span>
+                </button>
+                <template v-if="isEnabledRemoveButtons">
+                    <button @click="enableRemoveButtons">
+                        <span>Disable Remove</span>
+                    </button>
+                </template>
+                <template v-else>
+                    <button @click="disableRemoveButtons">
+                        <span>Enable Remove</span>
+                    </button>
+                </template>
+            </div>
+        </div>
+        <hr>
+        <div class="p-1 flex gap-3 flex-col grow-1">
+            <div class="flex gap-3 flex-col" v-for="(book, index) in books">
+                <div class="flex gap-3 flex-row">
+                    <div class="w-200 grow-1">
+                            <template v-if="book.isEditingBook">
+                                <input type="text" placeholder="Book title" v-model="book.title">
+                            </template>
+                            <template v-else>
+                                <div class="text-overflow-ellipsis">
+                                    <b v-html="book.title"></b>
+                                </div>
+                            </template>
+                        </div>
+                    <div class="flex flex-row align-items-baseline gap-3">
+                        <input @change="sabeBooksCurrentState" size="4" type="number" v-model="book.currentPage" :disabled="book.isEditingBook">
+                        <div class="w-min-60">
+                            <template v-if="book.isEditingBook">
+                                <input size="4" type="number" v-model="book.totalPages">
+                            </template>
+                            <template v-else>
+                                <span v-html="book.totalPages"></span>
+                            </template>
+                        </div>
+                        <div>
+                            <b v-html="percentage[index]"></b>
+                        </div>
+                    </div>
+                    <div class="flex grow-1 justify-end gap-3 w-200">
+                        <button @click="removeBook(index)" :disabled="!isEnabledRemoveButtons">
+                            <span>Remove</span>
+                        </button>
+                        <template v-if="book.isEditingBook">
+                            <button @click="saveBookConfig(index)">
+                                <span>Save</span>
+                            </button>
+                        </template>
+                        <template v-else>
+                            <button @click="enableBookEdition(index)">
+                                <span>Edit</span>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+                <progress :value="book.currentPage" :max="book.totalPages"></progress>
+            </div>
+        </div>
+    </div>
+    <script src="js/tools.utils.js"></script>
+    <script src="js/channels.viacep.js"></script>
+    <script src="js/vue.repository.js"></script>
+    <script src="js/vue.service.js"></script>
+    <script src="js/vue.config.js"></script>
+    <script src="js/vue.bootstrap.js"></script>
+</body>
+
+</html>
